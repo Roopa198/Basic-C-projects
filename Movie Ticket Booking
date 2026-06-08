@@ -1,0 +1,369 @@
+#include <iostream> 
+
+#include <iomanip> 
+
+using namespace std; 
+
+class management{ 
+
+    protected: 
+
+    int ID, seats; 
+
+    string name, movieTime; 
+
+    float price; 
+
+     
+
+    static int nextID; 
+
+     
+
+    public: 
+
+    void init(){ 
+
+        ID = nextID++; 
+
+        cout<<"Movie ID: "<<ID<<endl; 
+
+        cout<<"Enter movie name: "; 
+
+        cin.ignore(); 
+
+        getline(cin,name); 
+
+        cout<<"Enter Show time: "; 
+
+        cin>>movieTime; 
+
+        cout<<"Enter no. of available seats: "; 
+
+        cin>>seats; 
+
+        cout<<"Enter price per ticket: "; 
+
+        cin>>price; 
+
+         
+
+    } 
+
+    void dsp(){ 
+
+        cout<<left<<setw(10)<<ID<<setw(25)<<name<<setw(15)<<movieTime<<setw(10)<<price<<endl; 
+
+    } 
+
+}; 
+
+int management::nextID = 101; 
+
+  
+
+class booking : public management{ 
+
+    protected: 
+
+    int noOftickets, searchID; 
+
+    float total; 
+
+     
+
+    public: 
+
+    void bookTickets(int searchID){ 
+
+        if(searchID==ID){ 
+
+            cout<<"Enter no.of tickets: "; 
+
+            cin>>noOftickets; 
+
+            if(noOftickets <= seats){ 
+
+            seats = seats - noOftickets; 
+
+            } 
+
+            else{ 
+
+                cout<<"No available seats!!\nTry another time.\n"; 
+
+            } 
+
+        } 
+
+    } 
+
+    void cancelTickets(int searchID){ 
+
+        if(searchID==ID){ 
+
+            seats = seats+noOftickets; 
+
+            cout<<"Ticket cancelled!!\nRefund initiated\n"; 
+
+        } 
+
+    } 
+
+    void receipt(int searchID){ 
+
+        if(searchID==ID){ 
+
+            total = noOftickets*price; 
+
+            dsp(); 
+
+            cout<<"Total amount(Rs.): "<<total<<endl; 
+
+        } 
+
+    } 
+
+}; 
+
+class report : public booking{ 
+
+    protected: 
+
+    float revenue; 
+
+    public: 
+
+    void housefull(){ 
+
+        if(seats==0){ 
+
+            cout<<"Housefull Show: "<<name<<endl; 
+
+        } 
+
+    } 
+
+    void Revenue(int searchID){ 
+
+        if(searchID==ID){ 
+
+            revenue += total; 
+
+            cout<<"-------------------------------\n"; 
+
+            cout<<"Revenue for "<<name<<": "<<revenue; 
+
+            cout<<"\n--------------------------------\n"; 
+
+        } 
+
+    } 
+
+    void availSeats(int searchID){ 
+
+        if(searchID==ID){ 
+
+            cout<<"-------------------------------\n"; 
+
+            cout<<"Available Seats: "<<seats; 
+
+            cout<<"\n--------------------------------\n"; 
+
+        } 
+
+    } 
+
+}; 
+
+  
+
+int main(){ 
+
+    int n,i,choice; 
+
+    int searchID; 
+
+     
+
+    cout<<"Enter no. of movies: "; 
+
+    cin>>n; 
+
+     
+
+    report *r = new report[n]; 
+
+     
+
+    do{ 
+
+        cout<<"======================Movie Menu=================\n"; 
+
+        cout<<"1.Add movies\n2.Display Movie details\n3.Book Tickets\n4.Cancel Tickets\n5.Generate Ticket\n6.Housefull Show\n7.Revenue Per Movie\n8.Availabe Seats\n0.Exit\n"; 
+
+        cout<<"=================================================\n"; 
+
+        cout<<"Enter Choice: "; 
+
+        cin>>choice; 
+
+        switch (choice){ 
+
+            case 1: 
+
+            cout<<"---------------------------------------------\n"; 
+
+            cout<<"Adding Movie Details:\n"; 
+
+            for(i=0;i<n;i++){ 
+
+                r[i].init(); 
+
+            } 
+
+            cout<<"---------------------------------------------\n"; 
+
+            break; 
+
+            case 2: 
+
+            cout<<"---------------------------------------------\n"; 
+
+            cout<<left<<setw(10)<<"ID"<<setw(25)<<"Movie Name"<<setw(15)<<"Show Time"<<setw(10)<<"Ticket Price"<<endl; 
+
+            cout<<"---------------------------------------------\n"; 
+
+            for(i=0;i<n;i++){ 
+
+                r[i].dsp(); 
+
+            } 
+
+            cout<<"---------------------------------------------\n"; 
+
+            break; 
+
+            case 3: 
+
+            cout<<"---------------------------------------------\n"; 
+
+            cout<<"Enter movie ID: "; 
+
+            cin>>searchID; 
+
+            for(i=0;i<n;i++){ 
+
+                r[i].bookTickets(searchID); 
+
+            } 
+
+            cout<<"---------------------------------------------\n"; 
+
+            break; 
+
+            case 4: 
+
+            cout<<"---------------------------------------------\n"; 
+
+            cout<<"Enter movie ID: "; 
+
+            cin>>searchID; 
+
+            for(i=0;i<n;i++){ 
+
+                r[i].cancelTickets(searchID); 
+
+            } 
+
+            cout<<"---------------------------------------------\n"; 
+
+            break; 
+
+            case 5: 
+
+            cout<<"---------------------------------------------\n"; 
+
+            for(i=0;i<n;i++){ 
+
+                r[i].receipt(searchID); 
+
+            } 
+
+            cout<<"---------------------------------------------\n"; 
+
+            break; 
+
+            case 6: 
+
+            cout<<"---------------------------------------------\n"; 
+
+            for(i=0;i<n;i++){ 
+
+                r[i].housefull(); 
+
+            } 
+
+            cout<<"---------------------------------------------\n"; 
+
+            break; 
+
+            case 7: 
+
+            cout<<"---------------------------------------------\n"; 
+
+            cout<<"Enter movie ID: "; 
+
+            cin>>searchID; 
+
+            for(i=0;i<n;i++){ 
+
+                r[i].Revenue(searchID); 
+
+            } 
+
+            cout<<"---------------------------------------------\n"; 
+
+            break; 
+
+            case 8: 
+
+            cout<<"---------------------------------------------\n"; 
+
+            cout<<"Enter movie ID: "; 
+
+            cin>>searchID; 
+
+            for(i=0;i<n;i++){ 
+
+                r[i].availSeats(searchID); 
+
+            } 
+
+            cout<<"---------------------------------------------\n"; 
+
+            break; 
+
+            case 0: 
+
+            cout<<"---------------------------------------------\n"; 
+
+            cout<<"Exiting.....\nByeee!!\n"; 
+
+            cout<<"---------------------------------------------\n"; 
+
+            break; 
+
+        } 
+
+    }while (choice!=0); 
+
+     
+
+    delete[ ] r; 
+
+     
+
+    return 0; 
+
+} 
