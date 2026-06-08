@@ -1,0 +1,389 @@
+#include <iostream> 
+
+#include <iomanip> 
+
+using namespace std; 
+
+class input{ 
+
+  protected:  
+
+  int ID;   
+
+  string senderName, senderAdd;  
+
+  long int senderNo, receiverNo;  
+
+  string receiverName, receiverAdd;  
+
+  string status;   
+
+  float weight;  
+
+   
+
+  static int nextID; 
+
+   
+
+  public: 
+
+  void sender(){ 
+
+      cin.ignore(); 
+
+      cout<<"Enter Sender's Name: "; 
+
+      getline(cin,senderName); 
+
+      cout<<"Enter Sender's No.:  "; 
+
+      cin>>senderNo; 
+
+      cin.ignore(); 
+
+      cout<<"Enter Sender's Address: "; 
+
+      getline(cin,senderAdd); 
+
+  } 
+
+  void receiver(){ 
+
+      cout<<"Enter Receiver's Name: "; 
+
+      getline(cin,receiverName); 
+
+      cout<<"Enter Receiver's No.:  "; 
+
+      cin>>receiverNo; 
+
+      cin.ignore(); 
+
+      cout<<"Enter Receiver's Address: "; 
+
+      getline(cin,receiverAdd); 
+
+  } 
+
+  void init(){ 
+
+      ID = nextID++; 
+
+      cout<<"\nShipment ID: "<<ID<<endl; 
+
+      cout<<"Enter the weight of the shipment(kg): "; 
+
+      cin>>weight; 
+
+      cout<<"Enter the status of the shipment: "; 
+
+      cin>>status; 
+
+  } 
+
+  void dsp(){ 
+
+      cout<<left<<setw(10)<<ID<<setw(25)<<senderName<<setw(25)<<receiverName<<setw(15)<<weight<<setw(15)<<status<<endl; 
+
+  } 
+
+}; 
+
+  
+
+int input::nextID = 101; 
+
+  
+
+class shipment : public input{ 
+
+  protected: 
+
+  int searchID; 
+
+  public: 
+
+  void update(){ 
+
+      if(searchID==ID){ 
+
+          cout<<"Enter updated status: "; 
+
+          cin>>status; 
+
+          cout<<"Shipment Status updated!!"; 
+
+      } 
+
+      else{ 
+
+          cout<<"Invalid ID!!\nTry again"; 
+
+      } 
+
+  } 
+
+  void search(){ 
+
+      if(searchID==ID){ 
+
+          cout<<"ID: "<<ID<<"\nSender Name: "<<senderName<<"\nReceiver Name: "<<receiverName<<"\nWeight: "<<weight<<"\nStatus: "<<status<<endl; 
+
+      } 
+
+      else{ 
+
+          cout<<"Invalid ID!!\nTry again"; 
+
+      } 
+
+  } 
+
+  void pending(){ 
+
+          if (status=="Pending" || status == "pending"){ 
+
+              cout<<"ID: "<<ID<<"\nSender Name: "<<senderName<<"\nReceiver Name: "<<receiverName<<"\nWeight: "<<weight<<"\nStatus: "<<status<<endl; 
+
+      } 
+
+  } 
+
+}; 
+
+class delivery : public shipment{ 
+
+    protected: 
+
+     
+
+    public: 
+
+    void estimation(){ 
+
+        if (status == "Pending" || status == "pending"){ 
+
+            cout<<"Estimated delivery: 2-3 days"; 
+
+        } 
+
+        else{ 
+
+            cout<<"Shipped"; 
+
+        } 
+
+    } 
+
+    void report(){ 
+
+        if (status == "Delivered" || status == "delivered"){ 
+
+            dsp(); 
+
+        } 
+
+        else{ 
+
+            cout<<"Pending"; 
+
+        } 
+
+    } 
+
+}; 
+
+int main(){ 
+
+    int n,i,choice; 
+
+    int searchID; 
+
+     
+
+    cout<<"Enter no. of shipments: "; 
+
+    cin>>n; 
+
+     
+
+    delivery *d = new delivery[n]; 
+
+     
+
+    do{ 
+
+        cout<<"================SHIPMENT MENU===============\n";   
+
+        cout<<"1. Add Shipment Details\n2. Display all Shipments\n3. Update Shipment Status\n4. Delivery Time Estimation\n5. Search shipment\n6. Display Pending Shipments\n7. Delivery Report\n0. Exit\n";   
+
+        cout<<"===============================================\n";   
+
+        cout<<"Enter your choice: ";   
+
+        cin>>choice; 
+
+         
+
+        switch (choice){ 
+
+            case 1: 
+
+                cout<<"-----------------------------------\n"; 
+
+                for(i=0;i<n;i++){ 
+
+                    d[i].sender(); 
+
+                    d[i].receiver(); 
+
+                    d[i].init(); 
+
+                } 
+
+                cout<<"-----------------------------------\n"; 
+
+                break; 
+
+             
+
+            case 2: 
+
+                cout<<"-----------------------------------\n"; 
+
+                cout<<"\n=====================Shipments========================"<<endl;   
+
+                cout<<"-----------------------------------------------------------\n";   
+
+                cout<<left<<setw(10)<<"ID"<<setw(25)<<"Sender's Details"<<setw(25)<<"Receiver's Details"<<setw(10)<<"Weight"<<setw(15)<<"Status"<<endl;   
+
+                cout<<"-----------------------------------------------------------\n";   
+
+                for(i=0;i<n;i++){   
+
+                    d[i].dsp();   
+
+                }   
+
+                cout<<"-----------------------------------\n"; 
+
+                break; 
+
+                 
+
+            case 3: 
+
+                cout<<"Enter search ID: "; 
+
+                cin>>searchID; 
+
+                cout<<"-----------------------------------\n"; 
+
+                for(i=0;i<n;i++){   
+
+                    d[i].update();   
+
+                } 
+
+                cout<<"-----------------------------------\n"; 
+
+                break; 
+
+             
+
+            case 4: 
+
+                cout<<"-----------------------------------\n"; 
+
+                for(i=0;i<n;i++){   
+
+                    d[i].estimation();   
+
+                } 
+
+                cout<<"-----------------------------------\n"; 
+
+                break; 
+
+                 
+
+            case 5: 
+
+                cout<<"Enter search ID: "; 
+
+                cin>>searchID; 
+
+                cout<<"-----------------------------------\n"; 
+
+                for(i=0;i<n;i++){   
+
+                    d[i].search();   
+
+                } 
+
+                cout<<"-----------------------------------\n"; 
+
+                break; 
+
+                 
+
+            case 6: 
+
+                cout<<"-----------------------------------\n"; 
+
+                for(i=0;i<n;i++){   
+
+                    d[i].pending();   
+
+                } 
+
+                cout<<"-----------------------------------\n"; 
+
+                break; 
+
+                 
+
+            case 7: 
+
+                cout<<"-----------------------------------\n"; 
+
+                for(i=0;i<n;i++){   
+
+                    d[i].report();   
+
+                } 
+
+                cout<<"-----------------------------------\n"; 
+
+                break; 
+
+                 
+
+            case 0: 
+
+                cout<<"-----------------------------------\n"; 
+
+                cout<<"Exiting....\nByee!!\n"; 
+
+                cout<<"-----------------------------------\n"; 
+
+                break; 
+        
+          default: 
+
+                cout<<"Invalid Choice!!"; 
+
+        } 
+
+    }while(choice != 0); 
+
+     
+
+    delete[] d; 
+
+     
+
+    return 0; 
+
+} 
