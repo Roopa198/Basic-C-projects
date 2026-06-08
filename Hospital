@@ -1,0 +1,177 @@
+#include <iostream> 
+
+using namespace std; 
+
+class patient{ 
+
+  protected: 
+
+  int p_id, c_fee; 
+
+  string p_name; 
+
+  public: 
+
+  patient(string n, int i, int f){ 
+
+      p_name = n; 
+
+      p_id = i; 
+
+      c_fee = f; 
+
+  } 
+
+  void pdsp(){ 
+
+      cout<<"Patient Name: "<<p_name<<endl<<"Patient ID: "<<p_id<<endl<<"Consultation Fees: "<<c_fee<<endl; 
+
+  } 
+
+}; 
+
+class oward:public patient{ 
+
+  public: 
+
+  int testcharge, bill; 
+
+  oward(string n, int i, int f,int t):patient(n, i, f){ 
+
+      testcharge = t; 
+
+  } 
+
+  void calc(){ 
+
+      bill = testcharge+c_fee; 
+
+  } 
+
+  void odsp(){ 
+
+      pdsp(); 
+
+      cout<<"Bill: "<<bill<<endl; 
+
+  } 
+
+}; 
+
+class gward:public patient{ 
+
+  public: 
+
+  float r_rent,med_charge, t_rent; 
+
+  int nod, bill; 
+
+  gward(string n, int i, int f,int d, float r, float m):patient(n, i, f){ 
+
+      nod = d; 
+
+      r_rent = r; 
+
+      med_charge = m; 
+
+  } 
+
+  void calc(){ 
+
+     t_rent = r_rent * nod; 
+
+     bill = t_rent+med_charge+c_fee; 
+
+  } 
+
+  void gdsp(){ 
+
+      pdsp(); 
+
+      cout<<"No. of days: "<<nod<<endl<<"Room rent: "<<r_rent<<endl<<"Medicine charges: "<<med_charge<<endl<<"Total Room Rent: "<<t_rent<<endl<<"Bill: "<<bill<<endl; 
+
+  } 
+
+}; 
+
+class iward:public patient{ 
+
+  public: 
+
+  int icu_charge, doc_charge, equip_charge, bill; 
+
+  iward(string n, int i, int f,int c, int o, int e):patient(n, i, f){ 
+
+      icu_charge = c; 
+
+      doc_charge = o; 
+
+      equip_charge = e; 
+
+  } 
+
+  void calc(){ 
+
+      bill = icu_charge+doc_charge+equip_charge+c_fee; 
+
+  } 
+
+  void idsp(){ 
+
+      pdsp(); 
+
+      cout<<"Bill: "<<bill<<endl; 
+
+  } 
+
+}; 
+
+int main() { 
+
+    int n; 
+
+    cout<<"1:Outpatient ward, 2:General Ward, 3:ICU"<<endl; 
+
+    cout<<"Enter Choice: "; 
+
+    cin>>n; 
+
+    if(n==1){ 
+
+        oward o("XYZ",258,600,5000); 
+
+        o.calc(); 
+
+        o.odsp(); 
+
+    } 
+
+    else if(n==2){ 
+
+        gward g("XYZ",258,600,4,1500,2500); 
+
+        g.calc(); 
+
+        g.gdsp(); 
+
+    } 
+
+    else if(n==3){ 
+
+        iward i("XYZ",258,600,10000,3000,40000); 
+
+        i.calc(); 
+
+        i.idsp(); 
+
+    } 
+
+    else{ 
+
+        cout<<"Invalid Choice"; 
+
+    } 
+
+    return 0; 
+
+} 
