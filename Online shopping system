@@ -1,0 +1,163 @@
+#include <iostream>  
+
+using namespace std;  
+
+class product{  
+
+    protected: 
+
+  string p_name, brand; 
+
+  float price;  
+
+  public:  
+
+  void init(string n, string b, float p){  
+
+      p_name = n;  
+
+      brand = b;  
+
+      price = p;  
+
+  }  
+
+  void dsp(){  
+
+      cout<<"Enter product name: "<<p_name<<"\n"<<"Enter brand: "<<brand<<"\n"<<"Enter price: "<<price<<"\n";  
+
+  }  
+
+};  
+
+  
+
+class Elec:public product{  
+
+  int power,warranty; 
+
+  float rating, d_price;  
+
+  public:  
+
+  Elec(int P, int w, float r, string n, string b, float p){  
+
+      init(n,b,p); 
+
+      power = P;  
+
+      warranty = w; 
+
+      rating = r;  
+
+      d_price = p*(0.10);  
+
+    }  
+
+  
+
+  void edsp(){  
+
+      dsp();  
+
+      cout<<"Enter power consumption: "<<power<<"\n"<<"Enter warranty: "<<warranty<<"\n"<<"Enter rating: "<<rating<<"\n";  
+
+      cout<<"Discounted price: "<<d_price<<endl;  
+
+  }      
+
+};  
+
+  
+
+class Cloth:public product{  
+
+  float d_price;  
+
+  string material, type; 
+
+  public:  
+
+  Cloth(string m, string t, string n, string b, float p){  
+
+      init(n,b,p); 
+
+      material = m; 
+
+      type = t; 
+
+      d_price = p*(0.20);  
+
+    }  
+
+  void cdsp(){  
+
+      dsp();  
+
+      cout<<"Enter Material: "<<material<<"\n"<<"Enter type of clothing: "<<type<<"\n"; 
+
+      cout<<"Discounted price: "<<d_price<<endl;  
+
+  }      
+
+};  
+
+  
+
+class Gro:public product{  
+
+  int ex_date; 
+
+  float d_price; 
+
+  public:  
+
+  Gro(int e, string n, string b, float p){  
+
+      init(n,b,p); 
+
+      ex_date = e; 
+
+      d_price = p*(0.05);  
+
+    }  
+
+  void gdsp(){  
+
+      dsp();  
+
+      cout<<"Enter Expiry Date: "<<ex_date<<"\n"; 
+
+      cout<<"Discounted price: "<<d_price<<endl;  
+
+  }      
+
+};  
+
+  
+
+int main() {      
+
+    Elec e1(500, 2, 4.5, "Mixer", "Philips", 3000); 
+
+    Cloth c1("Cotton", "Shirt", "Formal Shirt", "Allen Solly", 2000); 
+
+    Gro g1(30, "Rice", "IndiaGate", 1000);  
+
+    cout << "\n--- Electronic Product ---\n"; 
+
+    e1.edsp();  
+
+    cout << "\n--- Clothing Product ---\n"; 
+
+    c1.cdsp();  
+
+    cout << "\n--- Grocery Product ---\n"; 
+
+    g1.gdsp();      
+
+ 
+
+     return 0;  
+
+}  
