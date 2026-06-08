@@ -1,0 +1,207 @@
+#include <iostream> 
+
+using namespace std; 
+
+class transport{ 
+
+  protected: 
+
+  int id; 
+
+  string name; 
+
+  float dist, fare; 
+
+  public: 
+
+  transport(int i, string n, float d){ 
+
+      id = i; 
+
+      name = n; 
+
+      dist = d; 
+
+  } 
+
+  void dsp(){ 
+
+      cout<<"\nPassenger ID: "<<id<<endl<<"Passenger Name: "<<name<<endl<<"Distance Travelled: "<<dist<<" km"<<endl; 
+
+  } 
+
+}; 
+
+class bus:public transport{ 
+
+  public: 
+
+  bus(int i, string n, float d): transport(i,n,d){} 
+
+  void calc(){ 
+
+      fare = dist*5; 
+
+  } 
+
+  void bdsp(){ 
+
+      dsp(); 
+
+      cout<<"Total Fare: "<<fare<<endl; 
+
+  } 
+
+}; 
+
+class train:public transport{ 
+
+    int rchar; 
+
+    public: 
+
+    train(int i, string n, float d, int r): transport(i,n,d){ 
+
+        rchar = r; 
+
+    } 
+
+    void calc(){ 
+
+        fare = (dist*8)+rchar; 
+
+    } 
+
+    void tdsp(){ 
+
+        dsp(); 
+
+        cout << "Reservation Charges: " << rchar << endl; 
+
+        cout<<"Total Fare: "<<fare<<endl; 
+
+    } 
+
+}; 
+
+class flight:public transport{ 
+
+    int atax,fchar; 
+
+    public: 
+
+    flight(int i, string n, float d, int a, int f): transport(i,n,d){ 
+
+        atax = a; 
+
+        fchar = f; 
+
+    } 
+
+    void calc(){ 
+
+        fare = (dist*15)+atax+fchar; 
+
+    } 
+
+    void fdsp(){ 
+
+        dsp(); 
+
+        cout << "Airport Tax: " << atax << endl; 
+
+        cout << "Fuel Charges: " << fchar << endl; 
+
+        cout<<"Total Fare: "<<fare<<endl; 
+
+    } 
+
+}; 
+
+int main() { 
+
+    int choice, n, id; 
+
+    string name; 
+
+    float dist; 
+
+    cout<<"Select Transport Type: "<<endl<<"1. Bus"<<endl<<"2. Train"<<endl<<"3. Flight"; 
+
+    cout<<"\nEnter Choice: "; 
+
+    cin>>n; 
+
+    cout << "\nEnter Passenger ID: "; 
+
+    cin >> id; 
+
+    cout << "\nEnter Passenger Name: "; 
+
+    cin >> name; 
+
+    cout << "\nEnter Distance Travelled: "; 
+
+    cin >> dist; 
+
+    cout<<"-------- TICKET DETAILS --------"; 
+
+    if(n==1){  
+
+        bus b(id, name, dist); 
+
+        b.calc(); 
+
+        b.bdsp();  
+
+    }  
+
+  
+
+    else if(n==2){ 
+
+        int r; 
+
+        cout<<"\nEnter Reservation Charges: "<<endl; 
+
+        cin>>r; 
+
+        train t(id, name, dist,r); 
+
+        t.calc(); 
+
+        t.tdsp();  
+
+    }  
+
+    else if(n==3){  
+
+        int t,c; 
+
+        cout<<"\nEnter Airport Tax: "<<endl; 
+
+        cin>>t; 
+
+        cout<<"\nEnter Fuel Charges: "<<endl; 
+
+        cin>>c; 
+
+        flight f(id, name, dist,t,c); 
+
+        f.calc(); 
+
+        f.fdsp();  
+
+    }  
+
+    else{ 
+
+        cout<<"Invalid Choice";  
+
+    }  
+
+     
+
+    return 0; 
+
+} 
