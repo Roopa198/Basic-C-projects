@@ -1,0 +1,215 @@
+#include <iostream> 
+
+using namespace std; 
+
+class consumer{ 
+
+  protected: 
+
+  string name; 
+
+  int id, units, bill; 
+
+  public: 
+
+  consumer(int i, string n, int u){ 
+
+      id = i; 
+
+      name = n; 
+
+      units = u; 
+
+  } 
+
+  void dsp(){ 
+
+      cout<<"Consumer ID: "<<id<<endl; 
+
+      cout<<"Consumer Name: "<<name<<endl; 
+
+      cout<<"Units Consumed: "<<units<<endl; 
+
+  } 
+
+}; 
+
+class domestic:public consumer{ 
+
+    public: 
+
+    domestic(int i, string n, int u):consumer(i,n,u){}  
+
+    void calc(){ 
+
+      if (units<=100){ 
+
+          bill = units*5; 
+
+      } 
+
+      else{ 
+
+          bill = (100 * 5) + ((units - 100) * 7); 
+
+      } 
+
+  } 
+
+  void ddsp(){ 
+
+      dsp(); 
+
+      cout<<"Total Bill: "<<bill<<endl; 
+
+  } 
+
+}; 
+
+class commercial:public consumer{ 
+
+    int fchar; 
+
+    public: 
+
+    commercial(int i, string n, int u, int f):consumer(i,n,u){ 
+
+        fchar = f; 
+
+    }  
+
+    void calc(){ 
+
+          bill = (units*8)+fchar; 
+
+  } 
+
+  void cdsp(){ 
+
+      dsp(); 
+
+      cout<<"Fixed Charge: "<<fchar<<endl; 
+
+      cout<<"Total Bill: "<<bill<<endl; 
+
+  } 
+
+}; 
+
+class industrial:public consumer{ 
+
+    int dchar, tax; 
+
+    public: 
+
+    industrial(int i, string n, int u, int d, int t):consumer(i,n,u){ 
+
+        dchar = d; 
+
+        tax = t; 
+
+    }  
+
+    void calc(){ 
+
+          bill = (units*10)+dchar+tax; 
+
+  } 
+
+  void idsp(){ 
+
+      dsp(); 
+
+      cout<<"Demand Charge: "<<dchar<<endl; 
+
+      cout<<"Tax: "<<tax<<endl; 
+
+      cout<<"Total Bill: "<<bill<<endl; 
+
+  } 
+
+}; 
+
+int main(){ 
+
+    int n, id, units; 
+
+    string name; 
+
+    cout<<"Select Consumer Type: "<<endl<<"1. Domestic"<<endl<<"2. Commercial"<<endl<<"3. industrial"; 
+
+    cout<<"\nEnter Choice: "; 
+
+    cin>>n; 
+
+    cout<<"Enter Consumer ID: "; 
+
+    cin>>id; 
+
+    cout<<"Enter Consumer Name: "; 
+
+    cin>>name; 
+
+    cout<<"Enter Units Consumed: "; 
+
+    cin>>units; 
+
+    cout<<"-----ELECTRICITY BILL-----"<<endl; 
+
+    if(n==1){ 
+
+        domestic d(id,name,units); 
+
+        d.calc(); 
+
+        d.ddsp(); 
+
+    } 
+
+    else if(n==2){ 
+
+        int f; 
+
+        cout<<"Enter Fixed Charges: "; 
+
+        cin>>f; 
+
+        commercial c(id,name,units,f); 
+
+        c.calc(); 
+
+        c.cdsp(); 
+
+    } 
+
+    else if(n==3){ 
+
+        int d,t; 
+
+        cout<<"Enter Demand Charges: "; 
+
+        cin>>d; 
+
+        cout<<"Enter Tax: "; 
+
+        cin>>t; 
+
+        industrial i(id,name,units,d,t); 
+
+        i.calc(); 
+
+        i.idsp(); 
+
+    } 
+
+    else{ 
+
+        cout<<"Invalid Choice"; 
+
+    } 
+
+  
+
+    return 0; 
+
+} 
