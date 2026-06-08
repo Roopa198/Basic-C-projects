@@ -1,0 +1,377 @@
+ #include <iostream>  
+
+#include <iomanip>  
+
+using namespace std;  
+
+  
+
+class product{  
+
+  protected:  
+
+    int quantity; 
+
+    string name,ID; 
+
+    float price;  
+
+  public:  
+
+    void addProd(){  
+
+        cout<<"Enter Unique Product ID: ";  
+
+        cin>>ID;  
+
+        cout<<"Enter Product Name: ";  
+
+        getchar();  
+
+        getline(cin,name);  
+
+        cout<<"Enter Quantity in stock: ";  
+
+        cin>>quantity;  
+
+        cout<<"Enter Price per unit: ";  
+
+        cin>>price;  
+
+    }  
+
+};  
+
+  
+
+class modify : public product{  
+
+    protected:  
+
+        int threshold,a; 
+
+        string searchID; 
+
+         
+
+    public:  
+
+        void display(){  
+
+            cout<<left<<setw(10)<<ID<<setw(15)<<name<<setw(10)<<quantity<<setw(10)<<price<<endl;  
+
+        }  
+
+        void search(){ 
+
+            cout<<"Enter Product ID to be searched: "; 
+
+            cin>>searchID; 
+
+            if(searchID==ID){ 
+
+                    cout<<"--------------Product Details-------------------"<<endl;  
+
+                cout<<"------------------------------------------------"<<endl;  
+
+                cout<<left<<setw(10)<<"ID"<<setw(15)<<"Product Name"<<setw(10)<<"Quantity"<<setw(10)<<"Price Per Unit"<<endl;  
+
+                cout<<"------------------------------------------------"<<endl; 
+
+                    display();  
+
+                cout<<"\n------------------------------------------------"<<endl; 
+
+                } 
+
+                else{ 
+
+                    cout<<"Product with ID "<<searchID<<"not found!!"<<endl; 
+
+                } 
+
+        }  
+
+        void update(){ 
+
+            int newQuantity; 
+
+            float newPrice; 
+
+            cout<<"Enter Product ID to be updated: "; 
+
+            cin>>searchID; 
+
+            if(searchID==ID){ 
+
+                cout<<"Update Product:\n1.Quantity\n2.Price\n"; 
+
+                cout<<"Enter the choice to be updated: "; 
+
+                cin>>a; 
+
+                if(a==1){ 
+
+                    cout<<"Enter new quantity to be updated: "; 
+
+                    cin>>newQuantity; 
+
+                    quantity=newQuantity; 
+
+                    cout<<"Updated Successfully!!"<<endl; 
+
+                } 
+
+                else if(a==2){ 
+
+                    cout<<"Enter new price to be updated: "; 
+
+                    cin>>newPrice; 
+
+                    price=newPrice; 
+
+                    cout<<"Updated Successfully!!"<<endl; 
+
+                } 
+
+                else{ 
+
+                    cout<<"Invalid Choice"<<endl; 
+
+                } 
+
+            } 
+
+            else{ 
+
+                cout<<"Invalid Product ID"<<endl;; 
+
+            } 
+
+        }  
+
+        void del(){ 
+
+            cout<<"Enter Product ID to be deleted: "; 
+
+            cin>>searchID; 
+
+            if(searchID==ID){ 
+
+                ID = ""; 
+
+                name = ""; 
+
+                quantity = 0; 
+
+                price = 0.0; 
+
+                cout << "Product deleted successfully!\n"; 
+
+            } 
+
+            else{ 
+
+                cout<<"Invalid Product ID"<<endl;; 
+
+            } 
+
+        }  
+
+        void alert(){  
+
+            cout<<"Enter threshold for quantity: ";  
+
+            cin>>threshold;  
+
+            if(quantity<threshold){  
+
+                cout<<"Low stock product's ID: "<<ID<<endl;  
+
+            } 
+
+        }  
+
+};  
+
+  
+
+int main() {  
+
+    int n,i,choice,mo; 
+
+    string searchID; 
+
+  
+
+    cout<<"Enter no. of Products: ";  
+
+    cin>>n;  
+
+    modify m[50];  
+
+      
+
+    do{  
+
+        cout << "\n------------------ MENU ----------------"<<endl; 
+
+        cout<<"1. Add New Product"<<endl<<"2. Display All Products"<<endl<<"3. Search Product"<<endl<<"4. Update Product"<<endl<<"5. Delete Product"<<endl<<"6. Low stock products"<<endl<<"0. Exit"<<endl; 
+
+        cout<<"------------------------------------------------"<<endl; 
+
+        cout<<"Enter choice: ";  
+
+        cin>>choice;  
+
+  
+
+        if(choice==1){  
+
+            cout<<"\n------------------------------------------------"<<endl; 
+
+            for(i=0;i<n;i++){  
+
+                m[i].addProd();  
+
+            } 
+
+            cout<<"\n------------------------------------------------"<<endl; 
+
+        }  
+
+  
+
+        else if(choice==2){  
+
+            cout<<"--------------Product Details-------------------"<<endl;  
+
+            cout<<"------------------------------------------------"<<endl;  
+
+            cout<<left<<setw(10)<<"ID"<<setw(15)<<"Product Name"<<setw(10)<<"Quantity"<<setw(10)<<"Price Per Unit"<<endl;  
+
+            cout<<"------------------------------------------------"<<endl;  
+
+                for(i=0;i<n;i++){  
+
+                    m[i].display();  
+
+                }  
+
+            cout<<"\n------------------------------------------------"<<endl; 
+
+        }  
+
+         
+
+        else if(choice==3){ 
+
+            cout<<"Enter no. of products to be modified: "; 
+
+            cin>>mo; 
+
+            cout<<"\n------------------------------------------------"<<endl; 
+
+            for(i=0;i<mo;i++){  
+
+                m[i].search(); 
+
+            } 
+
+            cout<<"\n------------------------------------------------"<<endl; 
+
+        } 
+
+         
+
+        else if(choice==4){  
+
+            cout<<"Enter no. of products to be modified: "; 
+
+            cin>>mo; 
+
+            cout<<"\n------------------------------------------------"<<endl; 
+
+            for(i=0;i<mo;i++){  
+
+                m[i].update();  
+
+            } 
+
+            cout<<"\n------------------------------------------------"<<endl; 
+
+        } 
+
+         
+
+        else if(choice==5){  
+
+            cout<<"Enter no. of products to be modified: "; 
+
+            cin>>mo; 
+
+            cout<<"\n------------------------------------------------"<<endl; 
+
+            for(i=0;i<mo;i++){  
+
+                m[i].del();  
+
+            } 
+
+            cout<<"\n------------------------------------------------"<<endl; 
+
+        } 
+
+  
+
+        else if(choice==6){  
+
+            cout<<"Enter no. of products to be modified: "; 
+
+            cin>>mo; 
+
+            cout<<"\n------------------------------------------------"<<endl; 
+
+            for(i=0;i<mo;i++){  
+
+                m[i].alert();  
+
+            } 
+
+            cout<<"\n------------------------------------------------"<<endl; 
+
+        } 
+
+         
+
+        else if(choice==0){ 
+
+            cout<<"\n------------------------------------------------"<<endl; 
+
+            cout<<"Program Exited\nBye!!"<<endl; 
+
+            cout<<"\n------------------------------------------------"<<endl; 
+
+        } 
+
+  
+
+        else{  
+
+            cout<<"\n------------------------------------------------"<<endl; 
+
+            cout<<"Invalid Choice"<<endl;  
+
+            cout<<"\n------------------------------------------------"<<endl; 
+
+        }  
+
+    }while(choice!=0);  
+
+  
+
+    return 0;  
+
+  
+
+}  
