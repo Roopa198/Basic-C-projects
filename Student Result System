@@ -1,0 +1,157 @@
+#include <iostream> 
+
+#include <iomanip> 
+
+using namespace std; 
+
+class Student{ 
+
+  protected: 
+
+  string name; 
+
+  int roll_no; 
+
+  public: 
+
+  void init(){ 
+
+            cout<<"Enter Name of student: "; 
+
+            cin>>name; 
+
+            cout<<"Enter Roll.No of student: "; 
+
+            cin>>roll_no; 
+
+     } 
+
+}; 
+
+class Marks : public Student{ 
+
+    protected: 
+
+    int marks[10], j, total = 0; 
+
+    public: 
+
+    void inmarks(){ 
+
+        init(); 
+
+        cout<<"Enter no. of subjects: "; 
+
+        cin>>j; 
+
+        for (int i=0;i<j;i++){ 
+
+            cout<<"Enter marks of subject"<<i+1<<": "; 
+
+            cin>>marks[i]; 
+
+            total += marks[i]; 
+
+        } 
+
+    } 
+
+}; 
+
+class Results:public Marks{ 
+
+    float avg; 
+
+    char grade; 
+
+   public: 
+
+    void average(){ 
+
+        inmarks(); 
+
+        avg = (float)total/j; 
+
+        if (avg >= 80){ 
+
+            grade = 'A'; 
+
+        } 
+
+        else if (avg >=60 && avg<80){ 
+
+            grade = 'B'; 
+
+        } 
+
+        else if (avg >=40 && avg<60){ 
+
+            grade = 'C'; 
+
+        } 
+
+        else { 
+
+            grade = 'F'; 
+
+        } 
+
+    } 
+
+    void display(){ 
+
+        cout<<left<<setw(15)<<name; 
+
+        cout<<setw(10)<<roll_no; 
+
+        cout<<setw(10)<<total; 
+
+        cout<<setw(10)<<avg; 
+
+        cout<<setw(10)<<grade<<endl; 
+
+    } 
+
+}; 
+
+int main() { 
+
+    int a; 
+
+    cout<<"Enter no. of students: "; 
+
+    cin>>a; 
+
+    Results r[a]; 
+
+    for(int i=0;i<a;i++){ 
+
+        r[i].average(); 
+
+    } 
+
+    cout<<"================ UNIVERSITY RESULT SHEET ================"<<endl; 
+
+    cout<<left<<setw(15)<<"Name"; 
+
+    cout<<setw(10)<<"Roll.No"; 
+
+    cout<<setw(10)<<"Total"; 
+
+    cout<<setw(10)<<"Average"; 
+
+    cout<<setw(10)<<"Grade"<<endl; 
+
+    cout<<"--------------------------------------------------"<<endl; 
+
+    for(int i=0;i<a;i++){ 
+
+    r[i].display(); 
+
+    } 
+
+    cout<<"========================================================="<<endl; 
+
+    return 0; 
+
+} 
