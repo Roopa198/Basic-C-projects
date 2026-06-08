@@ -1,0 +1,143 @@
+#include <iostream>  
+
+using namespace std;  
+
+  
+
+class BankAccount{  
+
+  string ac_name, ac_num;  
+
+  float balance=0;  
+
+  int d_money, w_money, pin; 
+
+  public:  
+
+  void createAccount(){  
+
+      cout<<"Enter Account holder name: ";  
+
+      getline(cin, ac_name);  
+
+      cout<<"\nEnter Account No.: ";  
+
+      cin>>ac_num;  
+
+      for(int i=0;i<3;i++){ 
+
+        cout<<"Enter PIN: "; 
+
+        cin>>pin; 
+
+          if(pin == 1234){ 
+
+              break; 
+
+          } 
+
+          else{ 
+
+              cout<<"Incorrect PIN!!!\n"; 
+
+              cout<<"Try again later\n"; 
+
+              exit(0); 
+
+            } 
+
+      } 
+
+  }  
+
+  
+
+  void deposit(){  
+
+      cout<<"\nEnter amount to be deposited: ";  
+
+      cin>>d_money;  
+
+      balance = balance+d_money;  
+
+      cout<<"\nAmount deposited is: "<<d_money;  
+
+  }  
+
+   
+
+  void withdraw(){  
+
+      cout<<"\nEnter amount to be withdrawn: ";  
+
+      cin>>w_money;  
+
+      if (w_money<=balance){  
+
+          cout<<"Money is withdrawn \n";  
+
+          balance = balance-w_money;  
+
+          cout<<"\nAmount withdrawn is: "<<w_money;  
+
+      }  
+
+      else{ 
+
+          cout<<"Insufficient Balance \n";  
+
+      }  
+
+  }  
+
+  
+
+  void displayBalance(){  
+
+      cout<<"The current balance is: "<<balance<<endl;  
+
+  }  
+
+};  
+
+  
+
+int main() {  
+
+    BankAccount o1;  
+
+    o1.createAccount(); 
+
+    int n;  
+
+    do {   
+
+    cout<<"-------ATM MENU--------\n";  
+
+    cout<<" Press 1 to deposit \n Press 2 to withdraw \n Press 3 to check balance \n Press 4 to exit\n";  
+
+    cin>>n;  
+
+    if(n==1){ 
+
+    o1.deposit(); 
+
+    } 
+
+    else if(n==2){  
+
+    o1.withdraw();  
+
+    }  
+
+    else if(n==3){  
+
+    o1.displayBalance();  
+
+    }  
+
+    } while(n<=3);  
+
+    return 0;  
+
+}  
