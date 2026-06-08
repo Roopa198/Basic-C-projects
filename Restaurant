@@ -1,0 +1,367 @@
+#include <iostream> 
+
+#include <iomanip> 
+
+using namespace std; 
+
+class Menu{ 
+
+  protected: 
+
+  string name, ID, category; 
+
+  string searchID; 
+
+  int price; 
+
+  public: 
+
+  void init(){ 
+
+      cout<<"Enter name of the item: "; 
+
+      getchar(); 
+
+      getline(cin,name); 
+
+      cout<<"Enter an unique ID to the item: "; 
+
+      cin>>ID; 
+
+      cout<<"Enter price of the item: "; 
+
+      cin>>price; 
+
+      cout<<"Enter the category the item belongs to: "; 
+
+      getchar(); 
+
+      getline(cin,category); 
+
+  } 
+
+  void dsp(){ 
+
+      cout<<left<<setw(25)<<name<<setw(10)<<ID<<setw(10)<<price<<setw(15)<<category<<endl; 
+
+  } 
+
+  void Update(){ 
+
+      int newPrice; 
+
+      cout<<"Enter ID of the item to be updated: "; 
+
+      cin>>searchID; 
+
+      if (searchID == ID){ 
+
+        cout<<"Enter new price to be updated: "; 
+
+        cin>>newPrice; 
+
+        price = newPrice; 
+
+        cout<<"Updated Successfully!!\n"; 
+
+      } 
+
+      else{ 
+
+          cout<<"Invalid ID!!\n"; 
+
+      } 
+
+  } 
+
+  void Delete(){ 
+
+      cout<<"Enter ID of the item to be deleted: "; 
+
+      cin>>searchID; 
+
+      if (searchID == ID){ 
+
+        name =  " "; 
+
+        ID = " "; 
+
+        price = 0; 
+
+        category = " "; 
+
+        cout<<"Deleted Successfully!!\n"; 
+
+      } 
+
+      else{ 
+
+          cout<<"Invalid ID!!\n"; 
+
+      } 
+
+  } 
+
+}; 
+
+class Order : public Menu{ 
+
+    protected: 
+
+    int total,qty,bill,soldQty=0; 
+
+    public: 
+
+    void order(){ 
+
+        cout<<"Enter ID of the item to be ordered: "; 
+
+        cin>>searchID; 
+
+        if(searchID==ID){ 
+
+            cout<<"Enter quantity of the item: "; 
+
+            cin>>qty; 
+
+            total = qty*price; 
+
+            soldQty+=qty; 
+
+        } 
+
+        else{ 
+
+            cout<<"Invalid ID!!"; 
+
+        } 
+
+    } 
+
+    void Bill(){ 
+
+        float tax, discount; 
+
+        tax = 0.05*total; 
+
+        if(total>1000){ 
+
+            discount = total*0.1; 
+
+        } 
+
+        else{ 
+
+            discount = 0; 
+
+        } 
+
+        bill = total + tax - discount; 
+
+        cout<<"Order: "<<name<<"\t"<<"Quantity: "<<qty<<endl; 
+
+        cout<<"Total Price: "<<bill<<endl; 
+
+    } 
+
+}; 
+
+class Sales : public Order{ 
+
+    protected: 
+
+    int revenue=0; 
+
+    public: 
+
+    void report(){ 
+
+         if(soldQty > 0){ 
+
+            cout<<left<<setw(25)<<name<<setw(10)<<ID<<setw(15)<<soldQty     <<endl; 
+
+         } 
+
+    } 
+
+    void Revenue(){ 
+
+        revenue+=bill; 
+
+        cout<<"Total Revenue: "<<revenue<<endl; 
+
+    } 
+
+     
+
+}; 
+
+int main() { 
+
+    int n=0,i, choice=0, a; 
+
+    Sales s[50]; 
+
+    do{ 
+
+        cout<<"================RESTAURANT MENU===============\n"; 
+
+        cout<<"1. Add items\n2. Display Menu\n3. Update Item\n4. Delete Item\n5. Order Food\n6. Generate Bill\n7. Sales Report\n8. Revenue(Day)\n0. Exit\n"; 
+
+        cout<<"===============================================\n"; 
+
+        cout<<"Enter your choice: "; 
+
+        cin>>choice; 
+
+     
+
+        if(choice==1){ 
+
+            cout<<"Enter no. of items to be added: "; 
+
+            cin>>n; 
+
+            for(i=0;i<n;i++){ 
+
+               s[i].init();  
+
+            } 
+
+        } 
+
+        else if(choice==2){ 
+
+            cout<<"\n=======================MENU=========================="<<endl; 
+
+            cout<<"-----------------------------------------------------------\n"; 
+
+            cout<<left<<setw(25)<<"Name"<<setw(10)<<"ID"<<setw(10)<<"Price"<<setw(15)<<"Category"<<endl; 
+
+            cout<<"-----------------------------------------------------------\n"; 
+
+            for(i=0;i<n;i++){ 
+
+                s[i].dsp(); 
+
+            } 
+
+            cout<<"-----------------------------------------------------------\n"; 
+
+        } 
+
+        else if(choice==3){ 
+
+            cout<<"Enter no. of items to be updated: "; 
+
+            cin>>a; 
+
+            for(i=0;i<a;i++){ 
+
+               s[i].Update();  
+
+            } 
+
+        } 
+
+        else if(choice==4){ 
+
+            cout<<"Enter no. of items to be deleted: "; 
+
+            cin>>a; 
+
+            for(i=0;i<a;i++){ 
+
+               s[i].Delete();  
+
+            } 
+
+        } 
+
+        else if(choice==5){ 
+
+            cout<<"Enter no. of items to ordered: "; 
+
+            cin>>a; 
+
+            for(i=0;i<n;i++){ 
+
+                s[i].dsp(); 
+
+            } 
+
+            for(i=0;i<a;i++){ 
+
+                s[i].order(); 
+
+            } 
+
+        } 
+
+        else if(choice==6){ 
+
+            for(i=0;i<n;i++){ 
+
+                s[i].Bill(); 
+
+            } 
+
+        } 
+
+        else if(choice==7){ 
+
+            cout<<"\n===================SALES REPORT==================="<<endl; 
+
+            cout<<"-----------------------------------------------------------\n"; 
+
+            cout<<left<<setw(25)<<"Name"<<setw(10)<<"ID"<<setw(15)<<"Quantity Sold"<<endl; 
+
+            cout<<"-----------------------------------------------------------\n"; 
+
+            for(i=0;i<n;i++){ 
+
+                s[i].report(); 
+
+            } 
+
+            cout<<"-----------------------------------------------------------\n"; 
+
+        } 
+
+        else if(choice==8){ 
+
+            cout<<"\n=========== DAILY REVENUE ===========\n"; 
+
+            cout<<"------------------------------------\n"; 
+
+            for(i=0;i<n;i++){ 
+
+                s[i].Revenue(); 
+
+            } 
+
+            cout<<"------------------------------------\n"; 
+
+        } 
+
+        else if(choice==0){ 
+
+            cout<<"Program  Exited!!\nByeeee\n"; 
+
+        } 
+
+        else{ 
+
+            cout<<"Invalid Choice chosen!!\n"; 
+
+        } 
+
+         
+
+    }while(choice!=0); 
+
+  
+
+    return 0; 
+
+} 
